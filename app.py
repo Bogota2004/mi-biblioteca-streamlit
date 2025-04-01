@@ -23,18 +23,37 @@ if 'library' not in st.session_state:
     st.session_state.library = Library()
     
     # Sample data
-    book1 = Book("The Great Gatsby", "F. Scott Fitzgerald", 1)
-    book2 = Book("1984", "George Orwell", 2)
-    book3 = Book("Brave New World", "Aldous Huxley", 3)
+    books = [
+        # Clasics
+        Book("The Great Gatsby", "F. Scott Fitzgerald", 1),
+        Book("1984", "George Orwell", 2),
+        Book("Brave New World", "Aldous Huxley", 3),
+        Book("To Kill a Mockingbird", "Harper Lee", 4),
+        
+        
+        # Popular moderns
+        Book("The Hunger Games", "Suzanne Collins", 5),
+        Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", 6),
+        
+        
+        # Non-fiction
+        Book("Sapiens", "Yuval Noah Harari", 7),
+        Book("Atomic Habits", "James Clear", 8),
+        
+        
+        # Additional various
+        Book("The Lord of the Rings", "J.R.R. Tolkien", 9),
+        Book("The Martian", "Andy Weir", 10)
+    ]
+    
+    
+    for book in books:
+        st.session_state.library.add_book(book)
     
     member1 = Member("Alice", "secure123", 1001)
     member2 = Member("Bob", "password456", 1002)
     
     librarian1 = Librarian("Charlie", "admin123", 2001, st.session_state.library)
-    
-    st.session_state.library.add_book(book1)
-    st.session_state.library.add_book(book2)
-    st.session_state.library.add_book(book3)
     
     st.session_state.library.add_member(member1)
     st.session_state.library.add_member(member2)
