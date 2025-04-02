@@ -139,23 +139,25 @@ def register_user(user_type, name, user_id, password):
         return
     
     # Verificar si el ID ya existe (tanto para miembros como bibliotecarios)
-    all_users = {
-        **st.session_state.library._Library__members,
-        **st.session_state.library._Library__librarians
-    }
-    
-    if user_id in all_users:
-        st.error(f"Registration failed: The ID {user_id} is already in use by another user.")
-        return  # Detener el registro aquí
+    all_members = st.session_state.library._Library__members
+    all_librarians = st.session_state.library._Library__librarians
     
     if user_type == "Member":
-        new_member = Member(name, password, user_id)
-        st.session_state.library.add_member(new_member)
-        st.success("Member registered successfully! Please login.")
+        if user_id in all_members:
+            st.error(f"Registration failed: The ID {user_id} is already in use by another member.")
+            return  # Detener el registro aquí
+        else:
+            new_member = Member(name, password, user_id)
+            st.session_state.library.add_member(new_member)
+            st.success("Member registered successfully! Please login.")
     else:  # Librarian
-        new_librarian = Librarian(name, password, user_id, st.session_state.library)
-        st.session_state.library.add_librarian(new_librarian)
-        st.success("Librarian registered successfully! Please login.")
+        if user_id in all_librarians:
+            st.error(f"Registration failed: The ID {user_id} is already in use by another librarian.")
+            return
+        else:
+            new_librarian = Librarian(name, password, user_id, st.session_state.library)
+            st.session_state.library.add_librarian(new_librarian)
+            st.success("Librarian registered successfully! Please login.")
     
     st.session_state.registering = False
     st.rerun()
