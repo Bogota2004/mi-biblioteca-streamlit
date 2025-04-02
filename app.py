@@ -66,7 +66,7 @@ if 'logged_in' not in st.session_state:
 
 # Main function
 def main():
-    st.title("📚 Library Management System")
+    st.title("📚 LLibrary Management System")
     
     # Login/registration page
     if not st.session_state.logged_in:
